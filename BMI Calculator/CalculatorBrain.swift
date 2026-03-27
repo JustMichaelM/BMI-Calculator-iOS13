@@ -13,7 +13,11 @@ struct CalculatorBrain {
     var height: Float = 1.5
     var weight: Float = 100
     
-    var bmi: Float {
+    private var bmi: Float {
         return weight / powf(height,2)
+    }
+    
+    var bmiString: String {
+        return String(format: "%.2f", bmi)
     }
 }
