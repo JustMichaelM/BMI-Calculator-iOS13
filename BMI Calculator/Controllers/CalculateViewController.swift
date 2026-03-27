@@ -12,9 +12,7 @@ class CalculateViewController: UIViewController {
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
     
-    private var height: Float = 1.5
-    private var weight: Float = 100
-    private var bmi: Float = 0.0
+    var calculatorBrain = CalculatorBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,18 +20,15 @@ class CalculateViewController: UIViewController {
         print("Lubie Placki")
     }
     @IBAction func heightChange(_ sender: UISlider) {
-        height = sender.value
         heightLabel.text = String(format: "%.2f", sender.value) + "m"
+        calculatorBrain.height = sender.value
     }
     @IBAction func weightChange(_ sender: UISlider) {
         weightLabel.text = String(Int(sender.value)) + "Kg"
-        weight = sender.value
+        calculatorBrain.weight = sender.value
     }
     
     @IBAction func calculatePress(_ sender: UIButton) {
-        bmi = weight / powf(height, 2)
-        print(bmi)
-        
         self.performSegue(withIdentifier: "goToResults", sender: self)
 
     }
@@ -42,10 +37,8 @@ class CalculateViewController: UIViewController {
         if segue.identifier == "goToResults" {
             let destinationVC = segue.destination as! ResultViewController
             
-            destinationVC.bmiValue = String(format: "%.1f", bmi)
-            
+            destinationVC.bmiValue = String(format: "%.2f",calculatorBrain.bmi)
         }
     }
-    
 }
 
